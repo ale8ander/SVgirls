@@ -1,0 +1,10 @@
+[project]
+name = "mix-server-employment"
+version = "0.1.0"
+description = "MCP Server for World Bank Employment Data - provides sector-wise employment insights"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "mcp[cli]>=1.13.1",
+    "httpx>=0.27.0",
+]
