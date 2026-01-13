@@ -74,169 +74,104 @@ Returns the unemployment rate.
 
 ### Prerequisites
 - Python 3.10 or higher
-- `pip` (comes with Python)
 
 ### Setup
 
-1. Clone the repository:
+1. **Clone the repository:**
 ```bash
 git clone https://github.com/ale8ander/SVgirls.git
 cd SVgirls
 ```
 
-2. Create and activate a virtual environment (IMPORTANT!):
+2. **Create virtual environment:**
 
-**macOS/Linux:**
+macOS/Linux:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-**Windows (PowerShell):**
+Windows (PowerShell):
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-**Windows (Command Prompt):**
-```cmd
-python -m venv .venv
-.venv\Scripts\activate.bat
-```
-
-3. Install dependencies:
+3. **Install dependencies:**
 ```bash
 pip install mcp httpx
 ```
 
-**OR** if you have `uv` installed:
-```bash
-uv sync
-```
-
-### Verify Installation
-
-Test if the server works:
+4. **Test the installation:**
 ```bash
 python main.py
 ```
+Press Ctrl+C to stop. If no errors appear, installation is successful!
 
-You should see MCP server initialization. Press Ctrl+C to stop.
+## Usage with Claude Desktop
 
-## Running the Server
-
-### Option 1: STDIO Mode (for Claude Desktop or CLI)
-
-```bash
-uv run main.py
-```
-
-### Option 2: HTTP Server Mode (for web applications)
-
-```bash
-uv run main_http.py
-```
-
-The server will start on `http://127.0.0.1:8001`:
-- MCP endpoint: `http://127.0.0.1:8001/mcp`
-- Health check: `http://127.0.0.1:8001/ping`
+Claude Desktop will automatically run the server when needed. You don't need to manually start it.
 
 ## Configuration for Claude Desktop
 
-Add this MCP server to your Claude Desktop configuration file:
+### 1. Find your project path
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`<br>
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`<br>
-**Linux**: `~/.config/Claude/claude_desktop_config.json`<br>
-
-### ⚠️ IMPORTANT: You MUST install dependencies first!
-
-Before configuring Claude Desktop, make sure you:
-1. ✅ Cloned the repository
-2. ✅ Created a virtual environment (`.venv`)
-3. ✅ Activated the virtual environment
-4. ✅ Ran `pip install mcp httpx`
-5. ✅ Tested with `python main.py`
-
-### Option 1: Using venv Python (RECOMMENDED - Most Reliable)
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "/ABSOLUTE/PATH/TO/SVgirls/.venv/bin/python",
-      "args": [
-        "/ABSOLUTE/PATH/TO/SVgirls/main.py"
-      ]
-    }
-  }
-}
-```
-
-**Windows:** Use `.venv/Scripts/python.exe` instead of `.venv/bin/python`
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "C:/ABSOLUTE/PATH/TO/SVgirls/.venv/Scripts/python.exe",
-      "args": [
-        "C:/ABSOLUTE/PATH/TO/SVgirls/main.py"
-      ]
-    }
-  }
-}
-```
-
-### Option 2: Using `uv` (If you have uv installed)
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/ABSOLUTE/PATH/TO/SVgirls",
-        "run",
-        "main.py"
-      ]
-    }
-  }
-}
-```
-
-**Important:** Replace `/ABSOLUTE/PATH/TO/SVgirls` with your actual project path.
-
-**Path Examples:**
-
-macOS/Linux:
-- `/Users/yourname/projects/SVgirls/.venv/bin/python`
-- `/home/yourname/SVgirls/.venv/bin/python`
-
-Windows:
-- `C:/Users/YourName/Documents/SVgirls/.venv/Scripts/python.exe`
-
-### Finding Your Absolute Path
-
-To find your project's absolute path, navigate to the project folder and run:
-
-**macOS/Linux:**
+Navigate to the project folder and run:
 ```bash
 pwd
 ```
+Copy the full path (e.g., `/Users/yourname/projects/SVgirls`)
 
-**Windows (PowerShell):**
-```powershell
-pwd
+### 2. Edit Claude Desktop config file
+
+Open the config file:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+### 3. Add this configuration
+
+**macOS/Linux:**
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "/YOUR/PATH/TO/SVgirls/.venv/bin/python",
+      "args": ["/YOUR/PATH/TO/SVgirls/main.py"]
+    }
+  }
+}
 ```
 
-**Windows (Command Prompt):**
-```cmd
-cd
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "C:/YOUR/PATH/TO/SVgirls/.venv/Scripts/python.exe",
+      "args": ["C:/YOUR/PATH/TO/SVgirls/main.py"]
+    }
+  }
+}
 ```
 
-After updating the configuration, **restart Claude Desktop** completely for changes to take effect.
+**Replace `/YOUR/PATH/TO/SVgirls` with the actual path from step 1.**
+
+Example:
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "/Users/john/projects/SVgirls/.venv/bin/python",
+      "args": ["/Users/john/projects/SVgirls/main.py"]
+    }
+  }
+}
+```
+
+### 4. Restart Claude Desktop
+
+Completely quit and restart Claude Desktop for changes to take effect.
 
 ## World Bank Indicators Used
 

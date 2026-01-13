@@ -72,169 +72,104 @@ World Bank의 고용 데이터에 접근할 수 있는 Model Context Protocol (M
 
 ### 사전 요구사항
 - Python 3.10 이상
-- `pip` (Python과 함께 설치됨)
 
 ### 설정
 
-1. 저장소 클론:
+1. **저장소 클론:**
 ```bash
 git clone https://github.com/ale8ander/SVgirls.git
 cd SVgirls
 ```
 
-2. 가상환경 생성 및 활성화 (필수!):
+2. **가상환경 생성:**
 
-**macOS/Linux:**
+macOS/Linux:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-**Windows (PowerShell):**
+Windows (PowerShell):
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-**Windows (명령 프롬프트):**
-```cmd
-python -m venv .venv
-.venv\Scripts\activate.bat
-```
-
-3. 의존성 설치:
+3. **의존성 설치:**
 ```bash
 pip install mcp httpx
 ```
 
-**또는** `uv`가 설치되어 있다면:
-```bash
-uv sync
-```
-
-### 설치 확인
-
-서버가 제대로 작동하는지 테스트:
+4. **설치 확인:**
 ```bash
 python main.py
 ```
+Ctrl+C로 종료. 에러가 없으면 설치 성공!
 
-MCP 서버 초기화 메시지가 보여야 합니다. Ctrl+C로 종료하세요.
+## Claude Desktop에서 사용하기
 
-## 서버 실행
-
-### 옵션 1: STDIO 모드 (Claude Desktop 또는 CLI용)
-
-```bash
-uv run main.py
-```
-
-### 옵션 2: HTTP 서버 모드 (웹 애플리케이션용)
-
-```bash
-uv run main_http.py
-```
-
-서버는 `http://127.0.0.1:8001`에서 실행됩니다:
-- MCP 엔드포인트: `http://127.0.0.1:8001/mcp`
-- 헬스 체크: `http://127.0.0.1:8001/ping`
+Claude Desktop이 필요할 때 자동으로 서버를 실행합니다. 수동으로 시작할 필요 없습니다.
 
 ## Claude Desktop 설정
 
-Claude Desktop 설정 파일에 이 MCP 서버를 추가하세요:
+### 1. 프로젝트 경로 찾기
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`<br>
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`<br>
-**Linux**: `~/.config/Claude/claude_desktop_config.json`<br>
-
-### ⚠️ 중요: 반드시 먼저 의존성을 설치하세요!
-
-Claude Desktop 설정 전에 다음을 확인하세요:
-1. ✅ 저장소 클론 완료
-2. ✅ 가상환경(`.venv`) 생성 완료
-3. ✅ 가상환경 활성화 완료
-4. ✅ `pip install mcp httpx` 실행 완료
-5. ✅ `python main.py`로 테스트 완료
-
-### 옵션 1: venv Python 사용 (권장 - 가장 안정적)
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "/절대/경로/SVgirls/.venv/bin/python",
-      "args": [
-        "/절대/경로/SVgirls/main.py"
-      ]
-    }
-  }
-}
-```
-
-**Windows:** `.venv/bin/python` 대신 `.venv/Scripts/python.exe` 사용
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "C:/절대/경로/SVgirls/.venv/Scripts/python.exe",
-      "args": [
-        "C:/절대/경로/SVgirls/main.py"
-      ]
-    }
-  }
-}
-```
-
-### 옵션 2: `uv` 사용 (uv가 설치된 경우)
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/절대/경로/SVgirls",
-        "run",
-        "main.py"
-      ]
-    }
-  }
-}
-```
-
-**중요:** `/절대/경로/SVgirls`를 실제 프로젝트 경로로 교체하세요.
-
-**경로 예시:**
-
-macOS/Linux:
-- `/Users/yourname/projects/SVgirls/.venv/bin/python`
-- `/home/yourname/SVgirls/.venv/bin/python`
-
-Windows:
-- `C:/Users/YourName/Documents/SVgirls/.venv/Scripts/python.exe`
-
-### 절대 경로 찾기
-
-프로젝트의 절대 경로를 찾으려면, 프로젝트 폴더로 이동한 후 다음 명령어를 실행하세요:
-
-**macOS/Linux:**
+프로젝트 폴더에서 실행:
 ```bash
 pwd
 ```
+전체 경로 복사 (예: `/Users/yourname/projects/SVgirls`)
 
-**Windows (PowerShell):**
-```powershell
-pwd
+### 2. Claude Desktop 설정 파일 열기
+
+설정 파일 위치:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+### 3. 설정 추가
+
+**macOS/Linux:**
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "/당신의/경로/SVgirls/.venv/bin/python",
+      "args": ["/당신의/경로/SVgirls/main.py"]
+    }
+  }
+}
 ```
 
-**Windows (명령 프롬프트):**
-```cmd
-cd
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "C:/당신의/경로/SVgirls/.venv/Scripts/python.exe",
+      "args": ["C:/당신의/경로/SVgirls/main.py"]
+    }
+  }
+}
 ```
 
-설정 업데이트 후, **Claude Desktop을 완전히 재시작**해야 변경사항이 적용됩니다.
+**`/당신의/경로/SVgirls`를 1단계에서 복사한 실제 경로로 바꾸세요.**
+
+예시:
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "/Users/john/projects/SVgirls/.venv/bin/python",
+      "args": ["/Users/john/projects/SVgirls/main.py"]
+    }
+  }
+}
+```
+
+### 4. Claude Desktop 재시작
+
+Claude Desktop을 완전히 종료하고 다시 시작하세요.
 
 ## 사용된 World Bank 지표
 
