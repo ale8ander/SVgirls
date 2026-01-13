@@ -76,9 +76,10 @@ Returns the unemployment rate.
 
 ### Setup
 
-1. Navigate to the project directory:
+1. Clone the repository:
 ```bash
-cd mix_server-employment
+git clone https://github.com/ale8ander/SVgirls.git
+cd SVgirls
 ```
 
 2. Install dependencies using `uv`:
@@ -88,7 +89,7 @@ uv sync
 
 Or using `pip`:
 ```bash
-pip install -e .
+pip install mcp httpx
 ```
 
 ## Running the Server
@@ -111,10 +112,13 @@ The server will start on `http://127.0.0.1:8001`:
 
 ## Configuration for Claude Desktop
 
-Add to your Claude Desktop configuration file:
+Add this MCP server to your Claude Desktop configuration file:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+**Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+### Option 1: Using `uv` (Recommended)
 
 ```json
 {
@@ -123,7 +127,7 @@ Add to your Claude Desktop configuration file:
       "command": "uv",
       "args": [
         "--directory",
-        "/Users/juyeong/KNU/SJSU/mcpserver/mix_server-employment",
+        "/ABSOLUTE/PATH/TO/SVgirls",
         "run",
         "main.py"
       ]
@@ -131,6 +135,71 @@ Add to your Claude Desktop configuration file:
   }
 }
 ```
+
+**Important:** Replace `/ABSOLUTE/PATH/TO/SVgirls` with your actual project path.
+
+Example for macOS/Linux:
+- `/Users/yourname/projects/SVgirls`
+- `/home/yourname/SVgirls`
+
+Example for Windows:
+- `C:/Users/YourName/Documents/SVgirls`
+
+### Option 2: Using Python venv
+
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "python",
+      "args": [
+        "/ABSOLUTE/PATH/TO/SVgirls/main.py"
+      ],
+      "env": {
+        "PYTHONPATH": "/ABSOLUTE/PATH/TO/SVgirls"
+      }
+    }
+  }
+}
+```
+
+### Option 3: Using venv Python directly
+
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "/ABSOLUTE/PATH/TO/SVgirls/.venv/bin/python",
+      "args": [
+        "/ABSOLUTE/PATH/TO/SVgirls/main.py"
+      ]
+    }
+  }
+}
+```
+
+(Windows: Use `.venv/Scripts/python.exe` instead of `.venv/bin/python`)
+
+### Finding Your Absolute Path
+
+To find your project's absolute path, navigate to the project folder and run:
+
+**macOS/Linux:**
+```bash
+pwd
+```
+
+**Windows (PowerShell):**
+```powershell
+pwd
+```
+
+**Windows (Command Prompt):**
+```cmd
+cd
+```
+
+After updating the configuration, **restart Claude Desktop** completely for changes to take effect.
 
 ## World Bank Indicators Used
 
