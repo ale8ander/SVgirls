@@ -1,5 +1,7 @@
 # MCP World Bank Employment Server
 
+**[한국어 README](README_KR.md)**
+
 A Model Context Protocol (MCP) server that provides access to World Bank employment data across different sectors.
 
 ## Features
