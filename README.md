@@ -114,9 +114,9 @@ The server will start on `http://127.0.0.1:8001`:
 
 Add this MCP server to your Claude Desktop configuration file:
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
-**Linux**: `~/.config/Claude/claude_desktop_config.json`
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`<br>
+**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`<br>
+**Linux**: `~/.config/Claude/claude_desktop_config.json`<br>
 
 ### Option 1: Using `uv` (Recommended)
 
@@ -229,3 +229,4 @@ MIT
 ## Author
 
 Created for World Bank employment data analysis
+
