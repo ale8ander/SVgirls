@@ -73,8 +73,8 @@ Returns the unemployment rate.
 ## Installation
 
 ### Prerequisites
-- Python 3.13 or higher
-- `uv` package manager (recommended) or `pip`
+- Python 3.10 or higher
+- `pip` (comes with Python)
 
 ### Setup
 
@@ -84,15 +84,44 @@ git clone https://github.com/ale8ander/SVgirls.git
 cd SVgirls
 ```
 
-2. Install dependencies using `uv`:
+2. Create and activate a virtual environment (IMPORTANT!):
+
+**macOS/Linux:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+**Windows (Command Prompt):**
+```cmd
+python -m venv .venv
+.venv\Scripts\activate.bat
+```
+
+3. Install dependencies:
+```bash
+pip install mcp httpx
+```
+
+**OR** if you have `uv` installed:
 ```bash
 uv sync
 ```
 
-Or using `pip`:
+### Verify Installation
+
+Test if the server works:
 ```bash
-pip install mcp httpx
+python main.py
 ```
+
+You should see MCP server initialization. Press Ctrl+C to stop.
 
 ## Running the Server
 
@@ -120,7 +149,46 @@ Add this MCP server to your Claude Desktop configuration file:
 **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`<br>
 **Linux**: `~/.config/Claude/claude_desktop_config.json`<br>
 
-### Option 1: Using `uv` (Recommended)
+### ⚠️ IMPORTANT: You MUST install dependencies first!
+
+Before configuring Claude Desktop, make sure you:
+1. ✅ Cloned the repository
+2. ✅ Created a virtual environment (`.venv`)
+3. ✅ Activated the virtual environment
+4. ✅ Ran `pip install mcp httpx`
+5. ✅ Tested with `python main.py`
+
+### Option 1: Using venv Python (RECOMMENDED - Most Reliable)
+
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "/ABSOLUTE/PATH/TO/SVgirls/.venv/bin/python",
+      "args": [
+        "/ABSOLUTE/PATH/TO/SVgirls/main.py"
+      ]
+    }
+  }
+}
+```
+
+**Windows:** Use `.venv/Scripts/python.exe` instead of `.venv/bin/python`
+
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "C:/ABSOLUTE/PATH/TO/SVgirls/.venv/Scripts/python.exe",
+      "args": [
+        "C:/ABSOLUTE/PATH/TO/SVgirls/main.py"
+      ]
+    }
+  }
+}
+```
+
+### Option 2: Using `uv` (If you have uv installed)
 
 ```json
 {
@@ -140,47 +208,14 @@ Add this MCP server to your Claude Desktop configuration file:
 
 **Important:** Replace `/ABSOLUTE/PATH/TO/SVgirls` with your actual project path.
 
-Example for macOS/Linux:
-- `/Users/yourname/projects/SVgirls`
-- `/home/yourname/SVgirls`
+**Path Examples:**
 
-Example for Windows:
-- `C:/Users/YourName/Documents/SVgirls`
+macOS/Linux:
+- `/Users/yourname/projects/SVgirls/.venv/bin/python`
+- `/home/yourname/SVgirls/.venv/bin/python`
 
-### Option 2: Using Python venv
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "python",
-      "args": [
-        "/ABSOLUTE/PATH/TO/SVgirls/main.py"
-      ],
-      "env": {
-        "PYTHONPATH": "/ABSOLUTE/PATH/TO/SVgirls"
-      }
-    }
-  }
-}
-```
-
-### Option 3: Using venv Python directly
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "/ABSOLUTE/PATH/TO/SVgirls/.venv/bin/python",
-      "args": [
-        "/ABSOLUTE/PATH/TO/SVgirls/main.py"
-      ]
-    }
-  }
-}
-```
-
-(Windows: Use `.venv/Scripts/python.exe` instead of `.venv/bin/python`)
+Windows:
+- `C:/Users/YourName/Documents/SVgirls/.venv/Scripts/python.exe`
 
 ### Finding Your Absolute Path
 

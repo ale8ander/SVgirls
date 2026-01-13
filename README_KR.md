@@ -71,8 +71,8 @@ World Bank의 고용 데이터에 접근할 수 있는 Model Context Protocol (M
 ## 설치
 
 ### 사전 요구사항
-- Python 3.13 이상
-- `uv` 패키지 매니저 (권장) 또는 `pip`
+- Python 3.10 이상
+- `pip` (Python과 함께 설치됨)
 
 ### 설정
 
@@ -82,15 +82,44 @@ git clone https://github.com/ale8ander/SVgirls.git
 cd SVgirls
 ```
 
-2. `uv`를 사용한 의존성 설치:
+2. 가상환경 생성 및 활성화 (필수!):
+
+**macOS/Linux:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+**Windows (명령 프롬프트):**
+```cmd
+python -m venv .venv
+.venv\Scripts\activate.bat
+```
+
+3. 의존성 설치:
+```bash
+pip install mcp httpx
+```
+
+**또는** `uv`가 설치되어 있다면:
 ```bash
 uv sync
 ```
 
-또는 `pip` 사용:
+### 설치 확인
+
+서버가 제대로 작동하는지 테스트:
 ```bash
-pip install mcp httpx
+python main.py
 ```
+
+MCP 서버 초기화 메시지가 보여야 합니다. Ctrl+C로 종료하세요.
 
 ## 서버 실행
 
@@ -118,7 +147,46 @@ Claude Desktop 설정 파일에 이 MCP 서버를 추가하세요:
 **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`<br>
 **Linux**: `~/.config/Claude/claude_desktop_config.json`<br>
 
-### 옵션 1: `uv` 사용 (권장)
+### ⚠️ 중요: 반드시 먼저 의존성을 설치하세요!
+
+Claude Desktop 설정 전에 다음을 확인하세요:
+1. ✅ 저장소 클론 완료
+2. ✅ 가상환경(`.venv`) 생성 완료
+3. ✅ 가상환경 활성화 완료
+4. ✅ `pip install mcp httpx` 실행 완료
+5. ✅ `python main.py`로 테스트 완료
+
+### 옵션 1: venv Python 사용 (권장 - 가장 안정적)
+
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "/절대/경로/SVgirls/.venv/bin/python",
+      "args": [
+        "/절대/경로/SVgirls/main.py"
+      ]
+    }
+  }
+}
+```
+
+**Windows:** `.venv/bin/python` 대신 `.venv/Scripts/python.exe` 사용
+
+```json
+{
+  "mcpServers": {
+    "worldbank-employment": {
+      "command": "C:/절대/경로/SVgirls/.venv/Scripts/python.exe",
+      "args": [
+        "C:/절대/경로/SVgirls/main.py"
+      ]
+    }
+  }
+}
+```
+
+### 옵션 2: `uv` 사용 (uv가 설치된 경우)
 
 ```json
 {
@@ -138,47 +206,14 @@ Claude Desktop 설정 파일에 이 MCP 서버를 추가하세요:
 
 **중요:** `/절대/경로/SVgirls`를 실제 프로젝트 경로로 교체하세요.
 
-macOS/Linux 예시:
-- `/Users/yourname/projects/SVgirls`
-- `/home/yourname/SVgirls`
+**경로 예시:**
 
-Windows 예시:
-- `C:/Users/YourName/Documents/SVgirls`
+macOS/Linux:
+- `/Users/yourname/projects/SVgirls/.venv/bin/python`
+- `/home/yourname/SVgirls/.venv/bin/python`
 
-### 옵션 2: Python venv 사용
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "python",
-      "args": [
-        "/절대/경로/SVgirls/main.py"
-      ],
-      "env": {
-        "PYTHONPATH": "/절대/경로/SVgirls"
-      }
-    }
-  }
-}
-```
-
-### 옵션 3: venv Python 직접 사용
-
-```json
-{
-  "mcpServers": {
-    "worldbank-employment": {
-      "command": "/절대/경로/SVgirls/.venv/bin/python",
-      "args": [
-        "/절대/경로/SVgirls/main.py"
-      ]
-    }
-  }
-}
-```
-
-(Windows: `.venv/bin/python` 대신 `.venv/Scripts/python.exe` 사용)
+Windows:
+- `C:/Users/YourName/Documents/SVgirls/.venv/Scripts/python.exe`
 
 ### 절대 경로 찾기
 
